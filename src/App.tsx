@@ -66,10 +66,10 @@ export default function App() {
       <div className="min-h-screen">
         <Sidebar active={active} onNavigate={navigate} log={log} />
 
-        <main className="lg:ml-[220px]">
+        <main className="main-content overflow-x-hidden">
           <Hero clients={clients} projects={projects} goals={goals} />
 
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <Overview company={company} people={people} />
             <div className="mx-8 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
             <Clients clients={clients} />
