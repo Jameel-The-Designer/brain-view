@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
-import type { Section } from '../types'
-import { useConversationLog } from '../hooks/useSupabase'
+import type { Section, ConversationEntry } from '../types'
 
 const NAV_ITEMS: { id: Section; label: string }[] = [
   { id: 'overview', label: 'Overview' },
@@ -15,17 +14,20 @@ const NAV_ITEMS: { id: Section; label: string }[] = [
 interface SidebarProps {
   active: Section
   onNavigate: (s: Section) => void
+  log: ConversationEntry[]
 }
 
-export default function Sidebar({ active, onNavigate }: SidebarProps) {
+export default function Sidebar({ active, onNavigate, log }: SidebarProps) {
   const [open, setOpen] = useState(false)
-  const { data: log } = useConversationLog()
   const [relativeTime, setRelativeTime] = useState('')
 
   useEffect(() => {
     const calc = () => {
       if (log.length === 0) return
-      const latest = new Date(log[log.length - 1].created_at)
+      const sorted = [...log].sort(
+        (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      )
+      const latest = new Date(sorted[0].created_at)
       const diff = Math.floor((Date.now() - latest.getTime()) / 60000)
       if (diff < 1) setRelativeTime('Just now')
       else if (diff < 60) setRelativeTime(`${diff} min${diff > 1 ? 's' : ''} ago`)

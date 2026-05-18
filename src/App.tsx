@@ -64,7 +64,7 @@ export default function App() {
   return (
     <LayoutGroup>
       <div className="min-h-screen">
-        <Sidebar active={active} onNavigate={navigate} />
+        <Sidebar active={active} onNavigate={navigate} log={log} />
 
         <main className="lg:ml-[220px]">
           <Hero clients={clients} projects={projects} goals={goals} />

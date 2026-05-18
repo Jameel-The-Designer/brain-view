@@ -1,13 +1,14 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useId } from 'react'
 import { supabase } from '../lib/supabase'
 import type { Company, Person, Client, Goal, Project, StackItem, ConversationEntry } from '../types'
 
 function useRealtimeTable<T>(table: string, orderBy = 'sort_order') {
   const [data, setData] = useState<T[]>([])
   const [loading, setLoading] = useState(true)
+  const id = useId()
 
   useEffect(() => {
-    const fetch = () => {
+    const fetchData = () => {
       supabase
         .from(table)
         .select('*')
@@ -17,13 +18,14 @@ function useRealtimeTable<T>(table: string, orderBy = 'sort_order') {
           setLoading(false)
         })
     }
-    fetch()
+    fetchData()
+    const channelName = `${table}-${id}`
     const ch = supabase
-      .channel(table)
-      .on('postgres_changes', { event: '*', schema: 'public', table }, fetch)
+      .channel(channelName)
+      .on('postgres_changes', { event: '*', schema: 'public', table }, fetchData)
       .subscribe()
     return () => { supabase.removeChannel(ch) }
-  }, [table, orderBy])
+  }, [table, orderBy, id])
 
   return { data, loading }
 }
@@ -31,9 +33,10 @@ function useRealtimeTable<T>(table: string, orderBy = 'sort_order') {
 export function useCompany() {
   const [data, setData] = useState<Company | null>(null)
   const [loading, setLoading] = useState(true)
+  const id = useId()
 
   useEffect(() => {
-    const fetch = () => {
+    const fetchData = () => {
       supabase
         .from('company')
         .select('*')
@@ -44,13 +47,13 @@ export function useCompany() {
           setLoading(false)
         })
     }
-    fetch()
+    fetchData()
     const ch = supabase
-      .channel('company')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'company' }, fetch)
+      .channel(`company-${id}`)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'company' }, fetchData)
       .subscribe()
     return () => { supabase.removeChannel(ch) }
-  }, [])
+  }, [id])
 
   return { data, loading }
 }
