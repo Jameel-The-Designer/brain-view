@@ -43,7 +43,7 @@ export default function Sidebar({ active, onNavigate, log }: SidebarProps) {
     <>
       <button
         onClick={() => setOpen(!open)}
-        className="fixed top-5 left-5 z-50 lg:hidden w-9 h-9 flex flex-col items-center justify-center gap-[5px] bg-bg-surface border border-bg-border"
+        className="fixed top-5 left-5 z-50 lg:hidden w-9 h-9 flex flex-col items-center justify-center gap-[5px] glass rounded-lg"
         aria-label="Toggle navigation"
       >
         <span className={`block w-4 h-px bg-text-primary transition-transform origin-center ${open ? 'rotate-45 translate-y-[5px]' : ''}`} />
@@ -51,28 +51,29 @@ export default function Sidebar({ active, onNavigate, log }: SidebarProps) {
         <span className={`block w-4 h-px bg-text-primary transition-transform origin-center ${open ? '-rotate-45 -translate-y-[5px]' : ''}`} />
       </button>
 
-      <aside className={`fixed top-0 left-0 h-full w-[220px] bg-bg-surface border-r border-bg-border z-40 flex flex-col transition-transform lg:translate-x-0 ${open ? 'translate-x-0' : '-translate-x-full'}`}>
-
-        <div className="px-6 py-7 border-b border-bg-border">
-          <span className="font-display text-xl font-bold tracking-tight text-accent">
-            BV
-          </span>
-          <span className="font-mono text-[10px] text-text-muted ml-2 tracking-[0.15em] uppercase">
-            Brain View
-          </span>
+      <aside
+        className={`fixed top-0 left-0 h-full w-[220px] z-40 flex flex-col transition-transform lg:translate-x-0 ${open ? 'translate-x-0' : '-translate-x-full'}`}
+        style={{
+          background: 'oklch(0.06 0.03 18 / 0.85)',
+          backdropFilter: 'blur(24px)',
+          WebkitBackdropFilter: 'blur(24px)',
+          borderRight: '1px solid oklch(1 0 0 / 0.08)',
+        }}
+      >
+        <div className="px-6 py-7" style={{ borderBottom: '1px solid oklch(1 0 0 / 0.08)' }}>
+          <span className="font-display text-xl font-black tracking-tight text-accent">BV</span>
+          <span className="font-mono text-[10px] text-text-muted ml-2 tracking-[0.15em] uppercase">Brain View</span>
         </div>
 
         <nav className="flex-1 py-4 relative">
-          <div className="absolute left-6 top-4 bottom-4 w-px bg-bg-border" />
+          <div className="absolute left-6 top-4 bottom-4 w-px" style={{ background: 'oklch(1 0 0 / 0.08)' }} />
 
           {NAV_ITEMS.map((item) => (
             <button
               key={item.id}
-              onClick={() => {
-                onNavigate(item.id)
-                setOpen(false)
-              }}
-              className="relative w-full text-left pl-6 pr-4 py-3 flex items-center gap-3 transition-colors hover:bg-bg-elevated/50 group"
+              onClick={() => { onNavigate(item.id); setOpen(false) }}
+              className="relative w-full text-left pl-6 pr-4 py-3 flex items-center gap-3 transition-colors group"
+              style={{ color: active === item.id ? 'var(--color-accent)' : 'var(--color-text-secondary)' }}
             >
               {active === item.id && (
                 <motion.div
@@ -81,21 +82,17 @@ export default function Sidebar({ active, onNavigate, log }: SidebarProps) {
                   transition={{ type: 'spring', stiffness: 500, damping: 40 }}
                 />
               )}
-              <span className={`font-mono text-[10px] transition-colors ${
-                active === item.id ? 'text-accent' : 'text-text-muted group-hover:text-text-secondary'
-              }`}>
+              <span className={`font-mono text-[10px] transition-colors ${active === item.id ? 'text-accent' : 'text-text-muted'}`}>
                 {item.index}
               </span>
-              <span className={`text-sm font-medium transition-colors ${
-                active === item.id ? 'text-accent' : 'text-text-secondary group-hover:text-text-primary'
-              }`}>
+              <span className={`text-sm font-semibold transition-colors ${active === item.id ? 'text-accent' : 'text-text-secondary group-hover:text-text-primary'}`}>
                 {item.label}
               </span>
             </button>
           ))}
         </nav>
 
-        <div className="px-6 py-4 border-t border-bg-border">
+        <div className="px-6 py-4" style={{ borderTop: '1px solid oklch(1 0 0 / 0.08)' }}>
           <div className="flex items-center gap-2 mb-1.5">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-60" style={{ animation: 'ripple 1.2s ease-out infinite' }} />
@@ -104,9 +101,7 @@ export default function Sidebar({ active, onNavigate, log }: SidebarProps) {
             <span className="font-mono text-[10px] tracking-[0.15em] text-green-400 uppercase">Live</span>
           </div>
           {relativeTime && (
-            <p className="font-mono text-[10px] text-text-muted">
-              sync {relativeTime}
-            </p>
+            <p className="font-mono text-[10px] text-text-muted">sync {relativeTime}</p>
           )}
         </div>
       </aside>

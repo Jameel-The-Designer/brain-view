@@ -1,18 +1,18 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg-primary: oklch(0.09 0.010 55);
-  --color-bg-surface: oklch(0.13 0.008 55);
-  --color-bg-elevated: oklch(0.19 0.008 55);
-  --color-bg-border: oklch(0.24 0.006 55);
-  --color-text-primary: oklch(0.93 0.008 80);
-  --color-text-secondary: oklch(0.58 0.010 75);
-  --color-text-muted: oklch(0.36 0.008 75);
-  --color-accent: oklch(0.82 0.15 78);
-  --color-accent-hover: oklch(0.74 0.15 78);
-  --color-accent-2: oklch(0.62 0.10 25);
-  --font-display: 'Space Grotesk', sans-serif;
-  --font-body: 'DM Sans', sans-serif;
+  --color-bg-primary: oklch(0.08 0.04 18);
+  --color-bg-surface: oklch(0.12 0.04 18);
+  --color-bg-elevated: oklch(0.18 0.05 20);
+  --color-bg-border: oklch(1 0 0 / 0.10);
+  --color-text-primary: oklch(0.96 0.004 75);
+  --color-text-secondary: oklch(0.65 0.010 60);
+  --color-text-muted: oklch(0.42 0.008 60);
+  --color-accent: oklch(0.75 0.17 48);
+  --color-accent-hover: oklch(0.68 0.17 48);
+  --color-accent-2: oklch(0.68 0.18 200);
+  --font-display: 'Montserrat', sans-serif;
+  --font-body: 'Montserrat', sans-serif;
   --font-mono: 'IBM Plex Mono', monospace;
   --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -28,13 +28,8 @@
 }
 
 @keyframes flash-new {
-  0% { background-color: oklch(0.82 0.15 78 / 0.14); }
-  100% { background-color: var(--color-bg-surface); }
-}
-
-@keyframes scan-line {
-  0% { left: -100%; }
-  100% { left: 100%; }
+  0% { background-color: oklch(0.75 0.17 48 / 0.15); }
+  100% { background-color: transparent; }
 }
 
 * {
@@ -50,9 +45,16 @@ html {
 body {
   font-family: var(--font-body);
   background-color: var(--color-bg-primary);
+  background-image: radial-gradient(ellipse at 60% 20%, oklch(0.32 0.14 22) 0%, oklch(0.16 0.08 18) 45%, oklch(0.07 0.03 15) 75%);
+  background-attachment: fixed;
   color: var(--color-text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: oklch(0.75 0.17 48 / 0.30);
+  color: var(--color-text-primary);
 }
 
 ::-webkit-scrollbar {
@@ -60,20 +62,16 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-bg-primary);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-bg-border);
+  background: oklch(1 0 0 / 0.15);
+  border-radius: 2px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-accent);
-}
-
-::selection {
-  background: oklch(0.82 0.15 78 / 0.25);
-  color: var(--color-text-primary);
 }
 
 .main-content {
@@ -84,4 +82,18 @@ body {
   .main-content {
     margin-left: 220px;
   }
+}
+
+.glass {
+  background: oklch(1 0 0 / 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid oklch(1 0 0 / 0.10);
+}
+
+.glass-strong {
+  background: oklch(1 0 0 / 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid oklch(1 0 0 / 0.14);
 }
