@@ -17,11 +17,11 @@ export default function LiveClock() {
   })
 
   return (
-    <div className="text-right">
-      <div className="text-[10px] font-mono tracking-[0.2em] text-text-muted uppercase">
-        JHB
+    <div className="text-right border border-bg-border px-4 py-3">
+      <div className="font-mono text-[10px] tracking-[0.25em] text-text-muted uppercase mb-1">
+        JHB · UTC+2
       </div>
-      <div className="font-mono text-lg text-accent tabular-nums">
+      <div className="font-mono text-2xl text-accent tabular-nums tracking-tight">
         {formatted}
       </div>
     </div>

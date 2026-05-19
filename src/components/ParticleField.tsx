@@ -27,16 +27,16 @@ export default function ParticleField() {
     }
     resize()
 
-    const COUNT = 40
+    const COUNT = 28
     const w = () => canvas.offsetWidth
     const h = () => canvas.offsetHeight
 
     particlesRef.current = Array.from({ length: COUNT }, () => ({
       x: Math.random() * w(),
       y: Math.random() * h(),
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: (Math.random() - 0.5) * 0.3,
-      size: 1 + Math.random(),
+      vx: (Math.random() - 0.5) * 0.2,
+      vy: (Math.random() - 0.5) * 0.2,
+      size: 0.8 + Math.random() * 0.8,
     }))
 
     const onMouseMove = (e: MouseEvent) => {
@@ -60,9 +60,9 @@ export default function ParticleField() {
         const dx = mouse.x - p.x
         const dy = mouse.y - p.y
         const dist = Math.sqrt(dx * dx + dy * dy)
-        if (dist < 80) {
-          p.vx -= dx / dist * 0.5
-          p.vy -= dy / dist * 0.5
+        if (dist < 100) {
+          p.vx -= (dx / dist) * 0.3
+          p.vy -= (dy / dist) * 0.3
         }
 
         p.x += p.vx
@@ -77,7 +77,7 @@ export default function ParticleField() {
 
         ctx.beginPath()
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
-        ctx.fillStyle = 'oklch(0.72 0.18 165 / 0.25)'
+        ctx.fillStyle = 'oklch(0.82 0.15 78 / 0.18)'
         ctx.fill()
       }
 
@@ -86,11 +86,11 @@ export default function ParticleField() {
           const dx = particles[i].x - particles[j].x
           const dy = particles[i].y - particles[j].y
           const dist = Math.sqrt(dx * dx + dy * dy)
-          if (dist < 120) {
+          if (dist < 110) {
             ctx.beginPath()
             ctx.moveTo(particles[i].x, particles[i].y)
             ctx.lineTo(particles[j].x, particles[j].y)
-            ctx.strokeStyle = `oklch(0.72 0.18 165 / ${0.15 * (1 - dist / 120)})`
+            ctx.strokeStyle = `oklch(0.82 0.15 78 / ${0.10 * (1 - dist / 110)})`
             ctx.lineWidth = 0.5
             ctx.stroke()
           }
@@ -112,8 +112,7 @@ export default function ParticleField() {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 w-full h-full pointer-events-auto z-0"
-      style={{ pointerEvents: 'none' }}
+      className="absolute inset-0 w-full h-full pointer-events-none z-0"
     />
   )
 }

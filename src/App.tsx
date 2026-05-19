@@ -71,20 +71,27 @@ export default function App() {
 
           <div className="max-w-5xl mx-auto">
             <Overview company={company} people={people} />
-            <div className="mx-8 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+            <div className="border-t border-bg-border" />
             <Clients clients={clients} />
-            <div className="mx-8 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+            <div className="border-t border-bg-border" />
             <Goals goals={goals} />
-            <div className="mx-8 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+            <div className="border-t border-bg-border" />
             <Projects projects={projects} />
-            <div className="mx-8 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+            <div className="border-t border-bg-border" />
             <Stack items={stackItems} />
-            <div className="mx-8 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+            <div className="border-t border-bg-border" />
             <ConversationLog entries={log} />
           </div>
 
-          <footer className="text-center py-12 text-xs text-text-muted font-mono">
-            Brain View &middot; Built by Thami &middot; Powered by Supabase + Claude
+          <footer className="border-t border-bg-border py-8 px-8 lg:ml-0">
+            <div className="max-w-5xl mx-auto flex items-center justify-between">
+              <span className="font-mono text-[10px] text-text-muted tracking-[0.15em] uppercase">
+                Brain View
+              </span>
+              <span className="font-mono text-[10px] text-text-muted">
+                Built by Thami · Supabase + Claude
+              </span>
+            </div>
           </footer>
         </main>
 

@@ -18,8 +18,8 @@ function MagneticItem({ name }: { name: string }) {
       const cy = rect.top + rect.height / 2
       const dx = (e.clientX - cx) / rect.width
       const dy = (e.clientY - cy) / rect.height
-      x.set(dx * 6)
-      y.set(dy * 6)
+      x.set(dx * 5)
+      y.set(dy * 5)
     },
     [x, y]
   )
@@ -35,7 +35,7 @@ function MagneticItem({ name }: { name: string }) {
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
       style={{ x: springX, y: springY }}
-      className="inline-flex px-3 py-2 font-mono text-sm bg-bg-surface border border-white/5 rounded-md text-text-secondary hover:text-accent hover:border-accent/20 transition-colors cursor-default select-none"
+      className="inline-flex px-3 py-2 font-mono text-xs bg-bg-surface border border-bg-border text-text-secondary hover:text-accent hover:border-accent/30 transition-colors cursor-default select-none"
     >
       {name}
     </motion.span>
@@ -60,23 +60,27 @@ export default function Stack({ items }: StackProps) {
   )
 
   return (
-    <section id="stack" className="px-8 py-16">
+    <section id="stack" className="px-8 py-14">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
       >
-        <h2 className="font-display text-3xl font-bold text-text-primary mb-8">
-          Stack
-        </h2>
+        <div className="mb-10">
+          <span className="font-mono text-[10px] text-text-muted tracking-[0.2em]">05</span>
+          <h2 className="font-display text-4xl font-bold text-text-primary mt-1 tracking-tight">
+            Stack
+          </h2>
+          <div className="mt-4 h-px bg-bg-border" />
+        </div>
 
-        <div className="space-y-6">
+        <div className="space-y-7">
           {sorted.map((category) => (
-            <div key={category}>
-              <h3 className="text-[11px] font-mono tracking-[0.15em] text-text-muted uppercase mb-3">
+            <div key={category} className="grid grid-cols-[80px_1fr] gap-4 items-start">
+              <span className="font-mono text-[10px] tracking-[0.15em] text-text-muted uppercase pt-2">
                 {category}
-              </h3>
+              </span>
               <div className="flex flex-wrap gap-2">
                 {categories[category].map((item) => (
                   <MagneticItem key={item.id} name={item.name} />
