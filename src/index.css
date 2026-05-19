@@ -71,6 +71,11 @@ body {
   background: var(--color-accent);
 }
 
+::selection {
+  background: oklch(0.82 0.15 78 / 0.25);
+  color: var(--color-text-primary);
+}
+
 .main-content {
   margin-left: 0;
 }
