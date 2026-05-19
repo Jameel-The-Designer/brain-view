@@ -16,7 +16,7 @@ export default function ConversationLog({ entries }: LogProps) {
       const newEntries = entries.slice(prevCount.current)
       const newIds = new Set(newEntries.map((e) => e.id))
       setFlashIds(newIds)
-      setTimeout(() => setFlashIds(new Set()), 600)
+      setTimeout(() => setFlashIds(new Set()), 800)
     }
     prevCount.current = entries.length
   }, [entries])
@@ -35,53 +35,57 @@ export default function ConversationLog({ entries }: LogProps) {
   }
 
   return (
-    <section id="log" className="px-8 py-16">
+    <section id="log" className="px-8 py-14">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
       >
-        <div className="flex items-center justify-between mb-2">
-          <h2 className="font-display text-3xl font-bold text-text-primary">
-            Log
-          </h2>
+        <div className="mb-10">
+          <span className="font-mono text-[10px] text-text-muted tracking-[0.2em]">06</span>
+          <div className="flex items-baseline gap-4 mt-1">
+            <h2 className="font-display text-4xl font-bold text-text-primary tracking-tight">
+              Log
+            </h2>
+            <span className="font-mono text-[10px] text-text-muted">
+              Claude sessions → Supabase MCP
+            </span>
+          </div>
+          <div className="mt-4 h-px bg-bg-border" />
         </div>
-        <p className="text-xs text-text-muted font-mono mb-8">
-          Updated from Claude sessions via Supabase MCP
-        </p>
 
-        <div className="space-y-2">
+        <div className="space-y-1">
           <AnimatePresence initial={false}>
             {sorted.map((entry) => (
               <motion.div
                 key={entry.id}
-                initial={{ opacity: 0, y: -20 }}
+                initial={{ opacity: 0, y: -12 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4 }}
-                className={`bg-bg-surface border border-white/5 rounded-md overflow-hidden transition-colors ${
-                  flashIds.has(entry.id) ? 'bg-accent/[0.08]' : ''
+                transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+                className={`bg-bg-surface border border-bg-border overflow-hidden transition-colors duration-500 ${
+                  flashIds.has(entry.id) ? 'border-accent/40' : ''
                 }`}
+                style={flashIds.has(entry.id) ? { animation: 'flash-new 0.8s ease-out forwards' } : {}}
               >
                 <button
                   onClick={() => toggle(entry.id)}
-                  className="w-full text-left px-5 py-4 flex items-center gap-4 hover:bg-white/[0.02] transition-colors"
+                  className="w-full text-left px-5 py-3.5 flex items-center gap-5 hover:bg-bg-elevated/50 transition-colors"
                 >
-                  <span className="text-xs font-mono text-text-muted whitespace-nowrap">
+                  <span className="font-mono text-[10px] text-text-muted whitespace-nowrap w-20 flex-shrink-0">
                     {new Date(entry.date).toLocaleDateString('en-ZA', {
                       day: '2-digit',
                       month: 'short',
-                      year: 'numeric',
                     })}
                   </span>
-                  <span className="font-medium text-text-primary flex-1 truncate">
+                  <span className="font-medium text-sm text-text-primary flex-1 truncate">
                     {entry.topic}
                   </span>
-                  <span className="text-[10px] font-mono text-text-muted">
+                  <span className="font-mono text-[10px] text-text-muted flex-shrink-0">
                     {entry.source}
                   </span>
                   <svg
-                    className={`w-4 h-4 text-text-muted transition-transform ${expanded.has(entry.id) ? 'rotate-180' : ''}`}
+                    className={`w-3.5 h-3.5 text-text-muted transition-transform flex-shrink-0 ${expanded.has(entry.id) ? 'rotate-180' : ''}`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -96,10 +100,10 @@ export default function ConversationLog({ entries }: LogProps) {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.2 }}
+                      transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
                       className="overflow-hidden"
                     >
-                      <div className="px-5 pb-4 border-t border-white/5 pt-3">
+                      <div className="px-5 pb-4 border-t border-bg-border pt-3 ml-20">
                         {entry.decision && (
                           <p className="text-sm text-text-secondary leading-relaxed mb-3">
                             {entry.decision}
@@ -110,7 +114,7 @@ export default function ConversationLog({ entries }: LogProps) {
                             {entry.tags.map((tag) => (
                               <span
                                 key={tag}
-                                className="px-2 py-0.5 text-[11px] font-mono rounded bg-accent/8 text-accent/70"
+                                className="font-mono text-[10px] text-accent/60"
                               >
                                 #{tag}
                               </span>
