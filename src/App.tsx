@@ -63,7 +63,7 @@ export default function App() {
 
   return (
     <LayoutGroup>
-      <div className="min-h-screen">
+      <div className="min-h-screen bg-[#050508]">
         <Sidebar active={active} onNavigate={navigate} log={log} />
 
         <main className="main-content overflow-x-hidden">
@@ -71,19 +71,19 @@ export default function App() {
 
           <div className="max-w-6xl mx-auto">
             <Overview company={company} people={people} />
-            <div className="mx-8 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+            <div className="mx-12 h-px bg-gradient-to-r from-transparent via-accent/10 to-transparent" />
             <Clients clients={clients} />
-            <div className="mx-8 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+            <div className="mx-12 h-px bg-gradient-to-r from-transparent via-accent/10 to-transparent" />
             <Goals goals={goals} />
-            <div className="mx-8 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+            <div className="mx-12 h-px bg-gradient-to-r from-transparent via-accent/10 to-transparent" />
             <Projects projects={projects} />
-            <div className="mx-8 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+            <div className="mx-12 h-px bg-gradient-to-r from-transparent via-accent/10 to-transparent" />
             <Stack items={stackItems} />
-            <div className="mx-8 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+            <div className="mx-12 h-px bg-gradient-to-r from-transparent via-accent/10 to-transparent" />
             <ConversationLog entries={log} />
           </div>
 
-          <footer className="text-center py-12 text-xs text-text-muted font-mono">
+          <footer className="text-center py-16 text-[11px] text-white/15 font-mono tracking-[0.15em] uppercase">
             Brain View &middot; Built by Thami &middot; Powered by Supabase + Claude
           </footer>
         </main>

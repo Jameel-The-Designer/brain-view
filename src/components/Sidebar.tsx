@@ -43,14 +43,14 @@ export default function Sidebar({ active, onNavigate, log }: SidebarProps) {
     <>
       <button
         onClick={() => setOpen(!open)}
-        className="fixed top-4 left-4 z-50 lg:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5 bg-bg-surface rounded-md border border-white/5"
+        className="fixed top-4 left-4 z-50 lg:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5 backdrop-blur-xl bg-white/[0.04] rounded-lg border border-white/[0.06]"
       >
-        <span className={`block w-5 h-0.5 bg-text-primary transition-transform ${open ? 'rotate-45 translate-y-1' : ''}`} />
-        <span className={`block w-5 h-0.5 bg-text-primary transition-opacity ${open ? 'opacity-0' : ''}`} />
-        <span className={`block w-5 h-0.5 bg-text-primary transition-transform ${open ? '-rotate-45 -translate-y-1' : ''}`} />
+        <span className={`block w-5 h-0.5 bg-white/80 transition-transform ${open ? 'rotate-45 translate-y-1' : ''}`} />
+        <span className={`block w-5 h-0.5 bg-white/80 transition-opacity ${open ? 'opacity-0' : ''}`} />
+        <span className={`block w-5 h-0.5 bg-white/80 transition-transform ${open ? '-rotate-45 -translate-y-1' : ''}`} />
       </button>
 
-      <aside className={`fixed top-0 left-0 h-full w-[220px] bg-bg-surface border-r border-white/5 z-40 flex flex-col transition-transform lg:translate-x-0 ${open ? 'translate-x-0' : '-translate-x-full'}`}>
+      <aside className={`fixed top-0 left-0 h-full w-[220px] backdrop-blur-2xl bg-[#050508]/80 border-r border-white/[0.04] z-40 flex flex-col transition-transform lg:translate-x-0 ${open ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="p-6 pt-8">
           <h1
             className="font-display text-2xl font-bold text-accent"
@@ -68,13 +68,13 @@ export default function Sidebar({ active, onNavigate, log }: SidebarProps) {
                 onNavigate(item.id)
                 setOpen(false)
               }}
-              className="relative w-full text-left px-3 py-2.5 rounded-md text-sm font-medium transition-colors hover:bg-white/5"
-              style={{ color: active === item.id ? 'var(--color-accent)' : 'var(--color-text-secondary)' }}
+              className="relative w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium transition-colors hover:bg-white/[0.04]"
+              style={{ color: active === item.id ? 'var(--color-accent)' : 'rgba(255,255,255,0.4)' }}
             >
               {active === item.id && (
                 <motion.div
                   layoutId="nav-indicator"
-                  className="absolute inset-0 rounded-md bg-accent/10 border border-accent/20"
+                  className="absolute inset-0 rounded-lg bg-accent/[0.08] border border-accent/15"
                   transition={{ type: 'spring', stiffness: 350, damping: 30 }}
                 />
               )}
@@ -83,16 +83,16 @@ export default function Sidebar({ active, onNavigate, log }: SidebarProps) {
           ))}
         </nav>
 
-        <div className="p-4 border-t border-white/5">
+        <div className="p-4 border-t border-white/[0.04]">
           <div className="flex items-center gap-2 mb-2">
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" style={{ animation: 'ripple 0.8s ease-out infinite' }} />
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500" />
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" style={{ animation: 'ripple 1.5s ease-out infinite' }} />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-accent" />
             </span>
-            <span className="text-xs text-green-400 font-medium">Live</span>
+            <span className="text-[11px] text-accent font-medium tracking-wide">Live</span>
           </div>
           {relativeTime && (
-            <p className="text-[11px] text-text-muted">
+            <p className="text-[11px] text-white/25">
               Updated {relativeTime}
             </p>
           )}

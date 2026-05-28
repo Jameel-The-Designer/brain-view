@@ -35,7 +35,7 @@ function MagneticItem({ name }: { name: string }) {
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
       style={{ x: springX, y: springY }}
-      className="inline-flex px-3 py-2 font-mono text-sm bg-bg-surface border border-white/5 rounded-md text-text-secondary hover:text-accent hover:border-accent/20 transition-colors cursor-default select-none"
+      className="inline-flex px-3 py-2 font-mono text-sm bg-white/[0.02] border border-white/[0.05] rounded-xl text-white/40 hover:text-accent hover:border-accent/20 hover:bg-accent/[0.04] transition-colors cursor-default select-none"
     >
       {name}
     </motion.span>
@@ -60,21 +60,22 @@ export default function Stack({ items }: StackProps) {
   )
 
   return (
-    <section id="stack" className="px-8 py-16">
+    <section id="stack" className="px-8 py-20">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.6 }}
       >
-        <h2 className="font-display text-3xl font-bold text-text-primary mb-8">
+        <div className="text-[11px] font-mono tracking-[0.2em] text-white/25 uppercase mb-4">/ Stack</div>
+        <h2 className="font-display text-4xl font-bold text-white/90 mb-10">
           Stack
         </h2>
 
-        <div className="space-y-6">
+        <div className="space-y-8">
           {sorted.map((category) => (
             <div key={category}>
-              <h3 className="text-[11px] font-mono tracking-[0.15em] text-text-muted uppercase mb-3">
+              <h3 className="text-[10px] font-mono tracking-[0.2em] text-white/25 uppercase mb-3">
                 {category}
               </h3>
               <div className="flex flex-wrap gap-2">

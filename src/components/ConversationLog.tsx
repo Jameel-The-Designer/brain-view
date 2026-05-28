@@ -35,19 +35,18 @@ export default function ConversationLog({ entries }: LogProps) {
   }
 
   return (
-    <section id="log" className="px-8 py-16">
+    <section id="log" className="px-8 py-20">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.6 }}
       >
-        <div className="flex items-center justify-between mb-2">
-          <h2 className="font-display text-3xl font-bold text-text-primary">
-            Log
-          </h2>
-        </div>
-        <p className="text-xs text-text-muted font-mono mb-8">
+        <div className="text-[11px] font-mono tracking-[0.2em] text-white/25 uppercase mb-4">/ Log</div>
+        <h2 className="font-display text-4xl font-bold text-white/90 mb-2">
+          Conversation Log
+        </h2>
+        <p className="text-xs text-white/25 font-mono mb-10">
           Updated from Claude sessions via Supabase MCP
         </p>
 
@@ -59,29 +58,29 @@ export default function ConversationLog({ entries }: LogProps) {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4 }}
-                className={`bg-bg-surface border border-white/5 rounded-md overflow-hidden transition-colors ${
-                  flashIds.has(entry.id) ? 'bg-accent/[0.08]' : ''
+                className={`backdrop-blur-xl bg-white/[0.02] border border-white/[0.05] rounded-2xl overflow-hidden transition-colors ${
+                  flashIds.has(entry.id) ? 'bg-accent/[0.06] border-accent/20' : ''
                 }`}
               >
                 <button
                   onClick={() => toggle(entry.id)}
                   className="w-full text-left px-5 py-4 flex items-center gap-4 hover:bg-white/[0.02] transition-colors"
                 >
-                  <span className="text-xs font-mono text-text-muted whitespace-nowrap">
+                  <span className="text-xs font-mono text-white/25 whitespace-nowrap">
                     {new Date(entry.date).toLocaleDateString('en-ZA', {
                       day: '2-digit',
                       month: 'short',
                       year: 'numeric',
                     })}
                   </span>
-                  <span className="font-medium text-text-primary flex-1 truncate">
+                  <span className="font-medium text-white/80 flex-1 truncate">
                     {entry.topic}
                   </span>
-                  <span className="text-[10px] font-mono text-text-muted">
+                  <span className="text-[10px] font-mono text-white/20">
                     {entry.source}
                   </span>
                   <svg
-                    className={`w-4 h-4 text-text-muted transition-transform ${expanded.has(entry.id) ? 'rotate-180' : ''}`}
+                    className={`w-4 h-4 text-white/20 transition-transform ${expanded.has(entry.id) ? 'rotate-180' : ''}`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -99,9 +98,9 @@ export default function ConversationLog({ entries }: LogProps) {
                       transition={{ duration: 0.2 }}
                       className="overflow-hidden"
                     >
-                      <div className="px-5 pb-4 border-t border-white/5 pt-3">
+                      <div className="px-5 pb-4 border-t border-white/[0.04] pt-3">
                         {entry.decision && (
-                          <p className="text-sm text-text-secondary leading-relaxed mb-3">
+                          <p className="text-sm text-white/45 leading-relaxed mb-3">
                             {entry.decision}
                           </p>
                         )}
@@ -110,7 +109,7 @@ export default function ConversationLog({ entries }: LogProps) {
                             {entry.tags.map((tag) => (
                               <span
                                 key={tag}
-                                className="px-2 py-0.5 text-[11px] font-mono rounded bg-accent/8 text-accent/70"
+                                className="px-2 py-0.5 text-[11px] font-mono rounded-md bg-accent/[0.06] text-accent/60"
                               >
                                 #{tag}
                               </span>

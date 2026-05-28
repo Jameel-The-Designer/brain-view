@@ -1,11 +1,11 @@
 export default function GrainOverlay() {
   return (
-    <svg className="fixed inset-0 w-full h-full pointer-events-none z-50 opacity-[0.04]">
+    <svg className="fixed inset-0 w-full h-full pointer-events-none z-50 opacity-[0.03]">
       <filter id="grain">
         <feTurbulence
           type="fractalNoise"
-          baseFrequency="0.65"
-          numOctaves={3}
+          baseFrequency="0.8"
+          numOctaves={4}
           stitchTiles="stitch"
         />
       </filter>

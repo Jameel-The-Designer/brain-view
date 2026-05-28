@@ -18,10 +18,10 @@ export default function LiveClock() {
 
   return (
     <div className="text-right">
-      <div className="text-[10px] font-mono tracking-[0.2em] text-text-muted uppercase">
+      <div className="text-[10px] font-mono tracking-[0.25em] text-white/20 uppercase">
         JHB
       </div>
-      <div className="font-mono text-lg text-accent tabular-nums">
+      <div className="font-mono text-lg text-accent/80 tabular-nums">
         {formatted}
       </div>
     </div>
