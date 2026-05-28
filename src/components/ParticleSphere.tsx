@@ -61,7 +61,6 @@ export default function ParticleSphere() {
 
     for (let i = 0; i < COUNT; i++) {
       const y = 1 - (i / (COUNT - 1)) * 2
-      const radiusAtY = Math.sqrt(1 - y * y)
       const theta = goldenAngle * i
       const phi = Math.acos(y)
 
