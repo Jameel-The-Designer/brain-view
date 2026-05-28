@@ -5,7 +5,6 @@ import type { Goal } from '../types'
 
 function ProgressBar({ current, target, animate }: { current: number; target: number; animate: boolean }) {
   const pct = Math.min((current / target) * 100, 100)
-
   return (
     <div className="w-full h-1.5 bg-white/[0.04] rounded-full overflow-hidden">
       <motion.div
@@ -29,10 +28,7 @@ export default function Goals({ goals }: GoalsProps) {
   useEffect(() => {
     const el = ref.current
     if (!el) return
-    const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true) },
-      { threshold: 0.2 }
-    )
+    const obs = new IntersectionObserver(([entry]) => { if (entry.isIntersecting) setVisible(true) }, { threshold: 0.2 })
     obs.observe(el)
     return () => obs.disconnect()
   }, [])
@@ -48,7 +44,7 @@ export default function Goals({ goals }: GoalsProps) {
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        <div className="text-[11px] font-mono tracking-[0.2em] text-white/25 uppercase mb-4">/ Goals</div>
+        <div className="text-[11px] font-mono tracking-[0.2em] text-white/25 uppercase mb-4">/ 03 Goals</div>
         <h2 className="font-display text-4xl font-bold text-white/90 mb-10">
           Goals
         </h2>
@@ -86,18 +82,16 @@ export default function Goals({ goals }: GoalsProps) {
                     <span className="text-sm text-white/25">
                       / {goal.unit === 'ZAR' ? 'R' : '$'}{goal.target_value.toLocaleString()}
                     </span>
+                    <span className="text-[11px] font-mono text-white/20 ml-auto">{pct.toFixed(0)}%</span>
                   </div>
                   <ProgressBar current={goal.current_value} target={goal.target_value} animate={visible} />
-                  <div className="mt-1.5 text-right text-[11px] font-mono text-white/20">
-                    {pct.toFixed(0)}%
-                  </div>
                 </div>
               )
             })}
           </div>
         )}
 
-        <div className="space-y-4">
+        <div className="space-y-3">
           {regular.map((goal) => {
             const pct = goal.target_value > 0 ? Math.min((goal.current_value / goal.target_value) * 100, 100) : 0
             return (

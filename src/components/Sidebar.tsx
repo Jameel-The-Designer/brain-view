@@ -2,13 +2,13 @@ import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import type { Section, ConversationEntry } from '../types'
 
-const NAV_ITEMS: { id: Section; label: string }[] = [
-  { id: 'overview', label: 'Overview' },
-  { id: 'clients', label: 'Clients' },
-  { id: 'goals', label: 'Goals' },
-  { id: 'projects', label: 'Projects' },
-  { id: 'stack', label: 'Stack' },
-  { id: 'log', label: 'Log' },
+const NAV_ITEMS: { id: Section; label: string; index: string }[] = [
+  { id: 'overview', label: 'Overview', index: '01' },
+  { id: 'clients', label: 'Clients', index: '02' },
+  { id: 'goals', label: 'Goals', index: '03' },
+  { id: 'projects', label: 'Projects', index: '04' },
+  { id: 'stack', label: 'Stack', index: '05' },
+  { id: 'log', label: 'Log', index: '06' },
 ]
 
 interface SidebarProps {
@@ -29,8 +29,8 @@ export default function Sidebar({ active, onNavigate, log }: SidebarProps) {
       )
       const latest = new Date(sorted[0].created_at)
       const diff = Math.floor((Date.now() - latest.getTime()) / 60000)
-      if (diff < 1) setRelativeTime('Just now')
-      else if (diff < 60) setRelativeTime(`${diff} min${diff > 1 ? 's' : ''} ago`)
+      if (diff < 1) setRelativeTime('just now')
+      else if (diff < 60) setRelativeTime(`${diff}m ago`)
       else if (diff < 1440) setRelativeTime(`${Math.floor(diff / 60)}h ago`)
       else setRelativeTime(`${Math.floor(diff / 1440)}d ago`)
     }
@@ -44,6 +44,7 @@ export default function Sidebar({ active, onNavigate, log }: SidebarProps) {
       <button
         onClick={() => setOpen(!open)}
         className="fixed top-4 left-4 z-50 lg:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5 backdrop-blur-xl bg-white/[0.04] rounded-lg border border-white/[0.06]"
+        aria-label="Toggle navigation"
       >
         <span className={`block w-5 h-0.5 bg-white/80 transition-transform ${open ? 'rotate-45 translate-y-1' : ''}`} />
         <span className={`block w-5 h-0.5 bg-white/80 transition-opacity ${open ? 'opacity-0' : ''}`} />
@@ -58,9 +59,10 @@ export default function Sidebar({ active, onNavigate, log }: SidebarProps) {
           >
             BV
           </h1>
+          <span className="font-mono text-[10px] text-white/25 ml-2 tracking-[0.15em] uppercase">Brain View</span>
         </div>
 
-        <nav className="flex-1 px-3">
+        <nav className="flex-1 py-4">
           {NAV_ITEMS.map((item) => (
             <button
               key={item.id}
@@ -68,7 +70,7 @@ export default function Sidebar({ active, onNavigate, log }: SidebarProps) {
                 onNavigate(item.id)
                 setOpen(false)
               }}
-              className="relative w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium transition-colors hover:bg-white/[0.04]"
+              className="relative w-full text-left px-6 py-2.5 flex items-center gap-3 transition-colors group"
               style={{ color: active === item.id ? 'var(--color-accent)' : 'rgba(255,255,255,0.4)' }}
             >
               {active === item.id && (
@@ -78,7 +80,12 @@ export default function Sidebar({ active, onNavigate, log }: SidebarProps) {
                   transition={{ type: 'spring', stiffness: 350, damping: 30 }}
                 />
               )}
-              <span className="relative z-10">{item.label}</span>
+              <span className={`font-mono text-[10px] transition-colors ${active === item.id ? 'text-accent' : 'text-white/20'}`}>
+                {item.index}
+              </span>
+              <span className={`text-sm font-medium transition-colors ${active === item.id ? 'text-accent' : 'text-white/40 group-hover:text-white/60'}`}>
+                {item.label}
+              </span>
             </button>
           ))}
         </nav>
@@ -92,8 +99,8 @@ export default function Sidebar({ active, onNavigate, log }: SidebarProps) {
             <span className="text-[11px] text-accent font-medium tracking-wide">Live</span>
           </div>
           {relativeTime && (
-            <p className="text-[11px] text-white/25">
-              Updated {relativeTime}
+            <p className="text-[11px] text-white/25 font-mono">
+              sync {relativeTime}
             </p>
           )}
         </div>

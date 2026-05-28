@@ -20,7 +20,7 @@ export default function Projects({ projects }: ProjectsProps) {
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        <div className="text-[11px] font-mono tracking-[0.2em] text-white/25 uppercase mb-4">/ Projects</div>
+        <div className="text-[11px] font-mono tracking-[0.2em] text-white/25 uppercase mb-4">/ 04 Projects</div>
         <h2 className="font-display text-4xl font-bold text-white/90 mb-10">
           Current Projects
         </h2>
@@ -70,10 +70,7 @@ export default function Projects({ projects }: ProjectsProps) {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1 text-xs text-accent/70 hover:text-accent transition-colors"
                 >
-                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                  </svg>
-                  {project.url}
+                  ↗ {project.url}
                 </a>
               )}
             </div>

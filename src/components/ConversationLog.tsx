@@ -13,10 +13,9 @@ export default function ConversationLog({ entries }: LogProps) {
 
   useEffect(() => {
     if (entries.length > prevCount.current) {
-      const newEntries = entries.slice(prevCount.current)
-      const newIds = new Set(newEntries.map((e) => e.id))
+      const newIds = new Set(entries.slice(prevCount.current).map((e) => e.id))
       setFlashIds(newIds)
-      setTimeout(() => setFlashIds(new Set()), 600)
+      setTimeout(() => setFlashIds(new Set()), 800)
     }
     prevCount.current = entries.length
   }, [entries])
@@ -42,12 +41,12 @@ export default function ConversationLog({ entries }: LogProps) {
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        <div className="text-[11px] font-mono tracking-[0.2em] text-white/25 uppercase mb-4">/ Log</div>
+        <div className="text-[11px] font-mono tracking-[0.2em] text-white/25 uppercase mb-4">/ 06 Log</div>
         <h2 className="font-display text-4xl font-bold text-white/90 mb-2">
           Conversation Log
         </h2>
         <p className="text-xs text-white/25 font-mono mb-10">
-          Updated from Claude sessions via Supabase MCP
+          Claude → Supabase MCP
         </p>
 
         <div className="space-y-2">
@@ -55,16 +54,15 @@ export default function ConversationLog({ entries }: LogProps) {
             {sorted.map((entry) => (
               <motion.div
                 key={entry.id}
-                initial={{ opacity: 0, y: -20 }}
+                initial={{ opacity: 0, y: -12 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4 }}
-                className={`backdrop-blur-xl bg-white/[0.02] border border-white/[0.05] rounded-2xl overflow-hidden transition-colors ${
-                  flashIds.has(entry.id) ? 'bg-accent/[0.06] border-accent/20' : ''
-                }`}
+                transition={{ duration: 0.3 }}
+                className="backdrop-blur-xl bg-white/[0.02] border border-white/[0.05] rounded-2xl overflow-hidden"
+                style={flashIds.has(entry.id) ? { animation: 'flash-new 0.8s ease-out forwards' } : {}}
               >
                 <button
                   onClick={() => toggle(entry.id)}
-                  className="w-full text-left px-5 py-4 flex items-center gap-4 hover:bg-white/[0.02] transition-colors"
+                  className="w-full text-left px-5 py-3.5 flex items-center gap-5 hover:bg-white/[0.04] transition-colors"
                 >
                   <span className="text-xs font-mono text-white/25 whitespace-nowrap">
                     {new Date(entry.date).toLocaleDateString('en-ZA', {
@@ -76,11 +74,11 @@ export default function ConversationLog({ entries }: LogProps) {
                   <span className="font-medium text-white/80 flex-1 truncate">
                     {entry.topic}
                   </span>
-                  <span className="text-[10px] font-mono text-white/20">
+                  <span className="text-[10px] font-mono text-white/20 flex-shrink-0">
                     {entry.source}
                   </span>
                   <svg
-                    className={`w-4 h-4 text-white/20 transition-transform ${expanded.has(entry.id) ? 'rotate-180' : ''}`}
+                    className={`w-4 h-4 text-white/20 transition-transform flex-shrink-0 ${expanded.has(entry.id) ? 'rotate-180' : ''}`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"

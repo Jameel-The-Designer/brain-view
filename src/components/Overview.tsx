@@ -23,16 +23,16 @@ export default function Overview({ company, people }: OverviewProps) {
         </h2>
         <p className="text-white/45 text-lg mb-10 max-w-2xl">{company.positioning}</p>
 
-        <div className="backdrop-blur-xl bg-white/[0.02] border border-white/[0.05] rounded-2xl p-8 mb-10">
+        <div className="glass rounded-2xl p-8 mb-10" style={{ borderLeft: '3px solid var(--color-accent)' }}>
           <blockquote className="text-xl md:text-2xl font-display font-semibold bg-gradient-to-r from-accent to-accent-2 bg-clip-text text-transparent italic leading-relaxed">
             "{company.pitch}"
           </blockquote>
         </div>
 
         <div className="grid md:grid-cols-2 gap-6 mb-12">
-          <div className="backdrop-blur-xl bg-white/[0.02] border border-white/[0.05] rounded-2xl p-6">
+          <div className="glass rounded-2xl p-6">
             <h3 className="text-[10px] font-mono tracking-[0.2em] text-white/25 uppercase mb-4">
-              Mission
+              / Mission
             </h3>
             <p className="text-white/50 leading-relaxed">{company.tagline}</p>
             <div className="mt-5 flex items-center gap-2 text-sm text-white/30">
@@ -53,11 +53,11 @@ export default function Overview({ company, people }: OverviewProps) {
             </div>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-3">
             {people.map((person) => (
               <motion.div
                 key={person.id}
-                className="backdrop-blur-xl bg-white/[0.02] border border-white/[0.05] rounded-2xl p-5 hover:border-accent/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_40px_rgba(255,0,120,0.08)]"
+                className="glass rounded-2xl p-5 hover:bg-white/[0.06] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_40px_rgba(255,0,120,0.08)]"
               >
                 <div className="flex items-center gap-3 mb-2">
                   <div className="w-10 h-10 rounded-full bg-gradient-to-br from-accent/20 to-accent-2/20 border border-accent/15 flex items-center justify-center text-accent font-display font-bold text-sm">
@@ -92,21 +92,23 @@ export default function Overview({ company, people }: OverviewProps) {
           </div>
         </div>
 
-        <div>
-          <h3 className="text-[10px] font-mono tracking-[0.2em] text-white/25 uppercase mb-4">
-            Target Verticals
-          </h3>
-          <div className="flex flex-wrap gap-2">
-            {company.target_verticals?.map((v) => (
-              <span
-                key={v}
-                className="px-3 py-1.5 text-sm rounded-full bg-accent-2/[0.08] text-accent-2/80 border border-accent-2/15"
-              >
-                {v}
-              </span>
-            ))}
+        {company.target_verticals && company.target_verticals.length > 0 && (
+          <div>
+            <h3 className="text-[10px] font-mono tracking-[0.2em] text-white/25 uppercase mb-4">
+              / Target Verticals
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {company.target_verticals.map((v) => (
+                <span
+                  key={v}
+                  className="px-3 py-1.5 text-sm rounded-full bg-accent-2/[0.08] text-accent-2/80 border border-accent-2/15"
+                >
+                  {v}
+                </span>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </motion.div>
     </section>
   )

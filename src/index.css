@@ -4,6 +4,7 @@
   --color-bg-primary: #050508;
   --color-bg-surface: rgba(255, 255, 255, 0.03);
   --color-bg-elevated: rgba(255, 255, 255, 0.06);
+  --color-bg-border: rgba(255, 255, 255, 0.10);
   --color-text-primary: rgba(255, 255, 255, 0.92);
   --color-text-secondary: rgba(255, 255, 255, 0.55);
   --color-text-muted: rgba(255, 255, 255, 0.30);
@@ -25,7 +26,7 @@
 
 @keyframes heartbeat {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
+  50% { opacity: 0.4; }
 }
 
 @keyframes ripple {
@@ -41,6 +42,11 @@
 @keyframes pulse-glow {
   0%, 100% { box-shadow: 0 0 0 0 rgba(255, 0, 120, 0); }
   50% { box-shadow: 0 0 20px 4px rgba(255, 0, 120, 0.08); }
+}
+
+@keyframes flash-new {
+  0% { background-color: rgba(255, 0, 120, 0.12); }
+  100% { background-color: transparent; }
 }
 
 * {
@@ -59,6 +65,11 @@ body {
   color: var(--color-text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: rgba(255, 0, 120, 0.30);
+  color: var(--color-text-primary);
 }
 
 ::-webkit-scrollbar {
@@ -86,4 +97,18 @@ body {
   .main-content {
     margin-left: 220px;
   }
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.10);
 }

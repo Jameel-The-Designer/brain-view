@@ -30,12 +30,12 @@ export default function Clients({ clients }: ClientsProps) {
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        <div className="text-[11px] font-mono tracking-[0.2em] text-white/25 uppercase mb-4">/ Clients</div>
+        <div className="text-[11px] font-mono tracking-[0.2em] text-white/25 uppercase mb-4">/ 02 Clients</div>
         <h2 className="font-display text-4xl font-bold text-white/90 mb-8">
           Active Clients
         </h2>
 
-        <div className="flex gap-2 mb-8 overflow-x-auto pb-2">
+        <div className="flex gap-2 mb-8 overflow-x-auto pb-1">
           {FILTERS.map((f) => (
             <button
               key={f}
@@ -62,7 +62,7 @@ export default function Clients({ clients }: ClientsProps) {
               <motion.div
                 key={client.id}
                 layout
-                initial={{ opacity: 0, scale: 0.95 }}
+                initial={{ opacity: 0, scale: 0.96 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.3 }}

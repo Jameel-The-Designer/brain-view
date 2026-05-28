@@ -2,6 +2,55 @@ import { useRef, useCallback } from 'react'
 import { motion, useSpring, useMotionValue } from 'framer-motion'
 import type { StackItem } from '../types'
 
+interface StackProps {
+  items: StackItem[]
+}
+
+export default function Stack({ items }: StackProps) {
+  const categories = items.reduce<Record<string, StackItem[]>>((acc, item) => {
+    const cat = item.category || 'other'
+    if (!acc[cat]) acc[cat] = []
+    acc[cat].push(item)
+    return acc
+  }, {})
+
+  const categoryOrder = ['frontend', 'backend', 'devops', 'ai', 'creative', 'tools']
+  const sorted = categoryOrder.filter((c) => categories[c]).concat(
+    Object.keys(categories).filter((c) => !categoryOrder.includes(c))
+  )
+
+  return (
+    <section id="stack" className="px-8 py-20">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+      >
+        <div className="text-[11px] font-mono tracking-[0.2em] text-white/25 uppercase mb-4">/ 05 Stack</div>
+        <h2 className="font-display text-4xl font-bold text-white/90 mb-10">
+          Stack
+        </h2>
+
+        <div className="space-y-8">
+          {sorted.map((category) => (
+            <div key={category}>
+              <h3 className="text-[10px] font-mono tracking-[0.2em] text-white/25 uppercase mb-3">
+                {category}
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {categories[category].map((item) => (
+                  <MagneticItem key={item.id} name={item.name} />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </motion.div>
+    </section>
+  )
+}
+
 function MagneticItem({ name }: { name: string }) {
   const ref = useRef<HTMLSpanElement>(null)
   const x = useMotionValue(0)
@@ -39,54 +88,5 @@ function MagneticItem({ name }: { name: string }) {
     >
       {name}
     </motion.span>
-  )
-}
-
-interface StackProps {
-  items: StackItem[]
-}
-
-export default function Stack({ items }: StackProps) {
-  const categories = items.reduce<Record<string, StackItem[]>>((acc, item) => {
-    const cat = item.category || 'other'
-    if (!acc[cat]) acc[cat] = []
-    acc[cat].push(item)
-    return acc
-  }, {})
-
-  const categoryOrder = ['frontend', 'backend', 'devops', 'ai', 'creative', 'tools']
-  const sorted = categoryOrder.filter((c) => categories[c]).concat(
-    Object.keys(categories).filter((c) => !categoryOrder.includes(c))
-  )
-
-  return (
-    <section id="stack" className="px-8 py-20">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-      >
-        <div className="text-[11px] font-mono tracking-[0.2em] text-white/25 uppercase mb-4">/ Stack</div>
-        <h2 className="font-display text-4xl font-bold text-white/90 mb-10">
-          Stack
-        </h2>
-
-        <div className="space-y-8">
-          {sorted.map((category) => (
-            <div key={category}>
-              <h3 className="text-[10px] font-mono tracking-[0.2em] text-white/25 uppercase mb-3">
-                {category}
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {categories[category].map((item) => (
-                  <MagneticItem key={item.id} name={item.name} />
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </motion.div>
-    </section>
   )
 }
