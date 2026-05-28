@@ -14,6 +14,7 @@ import type { Section } from './types'
 
 export default function App() {
   const [active, setActive] = useState<Section>('overview')
+  const [pastHero, setPastHero] = useState(false)
   const { data: company } = useCompany()
   const { data: people } = usePeople()
   const { data: clients } = useClients()
@@ -36,6 +37,19 @@ export default function App() {
     const el = document.getElementById(section)
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
+
+  /* Track when user scrolls past the hero */
+  useEffect(() => {
+    const heroEl = document.getElementById('hero')
+    if (!heroEl) return
+
+    const obs = new IntersectionObserver(
+      ([entry]) => setPastHero(!entry.isIntersecting),
+      { threshold: 0.05 }
+    )
+    obs.observe(heroEl)
+    return () => obs.disconnect()
+  }, [])
 
   useEffect(() => {
     const sections: Section[] = ['overview', 'clients', 'goals', 'projects', 'stack', 'log']
@@ -64,10 +78,16 @@ export default function App() {
   return (
     <LayoutGroup>
       <div className="min-h-screen bg-[#050508]">
-        <Sidebar active={active} onNavigate={navigate} log={log} />
+        {/* Sidebar fades in only after scrolling past the hero */}
+        <div
+          className="transition-opacity duration-500"
+          style={{ opacity: pastHero ? 1 : 0, pointerEvents: pastHero ? 'auto' : 'none' }}
+        >
+          <Sidebar active={active} onNavigate={navigate} log={log} />
+        </div>
 
-        <main className="main-content overflow-x-hidden">
-          <Hero clients={clients} projects={projects} goals={goals} />
+        <main className={`overflow-x-hidden ${pastHero ? 'main-content' : ''}`}>
+          <Hero />
 
           <div className="max-w-6xl mx-auto">
             <Overview company={company} people={people} />
