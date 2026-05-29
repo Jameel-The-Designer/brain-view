@@ -78,3 +78,19 @@ export interface ConversationEntry {
 }
 
 export type Section = 'overview' | 'clients' | 'goals' | 'projects' | 'stack' | 'log'
+
+export type Phase = 'sphere' | 'exploding' | 'universe' | 'collapsing'
+
+export interface InnerBall {
+  id: string
+  label: string
+  sublabel?: string
+  category: 'client' | 'goal' | 'project' | 'person' | 'stack' | 'log'
+  radius: number
+  color: [number, number, number]
+  glow: boolean
+  nx: number
+  ny: number
+  nz: number
+  phaseOffset: number
+}
